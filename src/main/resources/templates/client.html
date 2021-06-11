@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Ma banque</title>
+    <link rel="stylesheet" type="text/css"
+          href="../static/css1/bootstrap.min.css" th:href="@{/css1/bootstrap.min.css}">
+
+    <link rel="stylesheet" type="text/css"
+          href="../static/css1/util.css" th:href="@{/css1/util.css}">
+
+    <link rel="stylesheet" type="text/css"
+          href="../static/css1/main.css" th:href="@{/css1/main.css}">
+
+    <link rel="stylesheet" type="text/css"
+          href="../static/css1/select2.min.css" th:href="@{/css1/select2.min.css}">
+
+    <script src="../static/js/select2.min.js" th:src="@{/js/select2.min.js}"></script>
+    <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+</head>
+<body>
+
+<div th:if="${success2}">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            toastr.options.timeOut = 2000; // 2s
+            toastr.success('Account Created successfully !');
+        });
+    </script>
+</div>
+
+<div th:if="${success1}">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            toastr.options.timeOut = 2000; // 2s
+            toastr.success('Account Created successfully !');
+        });
+    </script>
+</div>
+
+
+<div class="container-contact100 ">
+    <div class="wrap-contact100 ">
+				<span class="contact100-form-title mt-3 text-center">
+
+				</span>
+        <div class="text-center offset-md-4" style="font-family: 'Times New Roman'"><h3>Make account</h3></div>
+
+        <a href=""></a><div class="row mb-3">
+        <div class="col-md-4">
+            <img src="https://icons.iconarchive.com/icons/dapino/callcenter-girls/256/callcenter-girls-flower-icon.png">
+        </div>
+
+        <div class="col-md-8">
+            <div th:if="${fill}"  class="alert-danger p-3 rounded text-center">you must fill correctly all the form</div>
+            <br>
+            <form th:action="@{/saveAccount}" th:object="${cl}" method="post">
+                <div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
+                    <span class="label-input100">Code account</span>
+                    <input class="input100" required minlength="3"  type="text" name="code" placeholder="Enter Your Name">
+                </div>
+
+                <div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
+                    <span class="label-input100">Name</span>
+                    <input class="input100"   type="text" name="nom" placeholder="Enter Your Name">
+                </div>
+
+                <div class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
+                    <span class="label-input100">Email</span>
+                    <input class="input100"   type="text" name="email" placeholder="Enter Your Name">
+                </div>
+
+                <div>
+                    <input required type="radio" name="typec" value="CC" >
+                    <label>Compte Courant</label>
+
+                    <input required type="radio" name="typec" value="CE" >
+                    <label>Compte Epargne</label>
+                </div>
+                <script>
+
+
+                    function change ()
+                    {
+                        document.getElementById('forVirement').style.display='block'
+                        document.getElementById('NforVirement').style.display='none'
+                    }
+
+                    function  unchange(){
+                        document.getElementById('forVirement').style.display='none'
+                        document.getElementById('NforVirement').style.display='block'
+                    }
+                </script>
+
+                <!--    <div id="forVirement" class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
+                        <span class="label-input100">Taux</span>
+                        <input class="input100" required minlength="3"  type="text" name="nom" placeholder="Enter Your Name">
+                    </div>
+
+                    <div id="NforVirement" class="wrap-input100 validate-input bg1" data-validate="Please Type Your Name">
+                        <span class="label-input100">Decouvert</span>
+                        <input class="input100" required  type="text" name="email" placeholder="Enter Your Name">
+                    </div>
+    !---->
+                <div class="container-contact100-form-btn">
+                    <button class="contact100-form-btn">
+						<span>
+							Submit
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+
+    </div>
+    </div>
+</div>
+<script>
+    (document).getElementById('forVirement').style.display='none';
+    (document).getElementById('NforVirement').style.display='none';
+</script>
+<script>
+    $(".js-select2").each(function(){
+        $(this).select2({
+            minimumResultsForSearch: 20,
+            dropdownParent: $(this).next('.dropDownSelect2')
+        });
+
+
+        $(".js-select2").each(function(){
+            $(this).on('select2:close', function (e){
+                if($(this).val() == "Please chooses") {
+                    $('.js-show-service').slideUp();
+                }
+                else {
+                    $('.js-show-service').slideUp();
+                    $('.js-show-service').slideDown();
+                }
+            });
+        });
+    })
+</script>
+<script>
+    var filterBar = document.getElementById('filter-bar');
+
+    noUiSlider.create(filterBar, {
+        start: [ 1500, 3900 ],
+        connect: true,
+        range: {
+            'min': 1500,
+            'max': 7500
+        }
+    });
+
+    var skipValues = [
+        document.getElementById('value-lower'),
+        document.getElementById('value-upper')
+    ];
+
+    filterBar.noUiSlider.on('update', function( values, handle ) {
+        skipValues[handle].innerHTML = Math.round(values[handle]);
+        $('.contact100-form-range-value input[name="from-value"]').val($('#value-lower').html());
+        $('.contact100-form-range-value input[name="to-value"]').val($('#value-upper').html());
+    });
+</script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-23581568-13');
+</script>
+</body>
+</html>

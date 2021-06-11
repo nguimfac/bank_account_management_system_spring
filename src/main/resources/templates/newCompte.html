@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="template1"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<link rel="stylesheet" type="text/css"
+      href="../static/css/Stylebtn.css" th:href="@{/css/Stylebtn.css}">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body class="wrapper">
+    <div th:insert="template1.html"></div>
+    <div class="container" style="background-color:rgb(25,25,112); border-radius: 10px">
+        <div class="gridcontainer clearfix">
+            <div class="grid_3">
+                <div class="fmcircle_out">
+                    <a th:href="@{/client}">
+                        <div class="fmcircle_border">
+                            <div class="fmcircle_in fmcircle_blue">
+                                <span>Account</span><img src="https://icons.iconarchive.com/icons/visualpharm/finance/128/credit-card-icon.png" alt="" />
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid_3">
+                <div class="fmcircle_out">
+                    <a href="#branding">
+                        <div class="fmcircle_border">
+                            <div class="fmcircle_in fmcircle_green">
+                                <span>Operations</span><img src="https://icons.iconarchive.com/icons/jonas-rask/ekisho-deep-ocean/128/Ekisho-Deep-Ocean-User-icon.png" alt="" />
+                            </div>
+                        </div>
+                    </a>o
+                </div>
+            </div>
+
+            <div class="grid_3">
+                <div class="fmcircle_out">
+                    <a href="#software">
+                        <div class="fmcircle_border">
+                            <div class="fmcircle_in fmcircle_red">
+                                <span>User</span><img src="https://icons.iconarchive.com/icons/aha-soft/people/128/user-info-icon.png" alt="" />
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</body>
+</html>

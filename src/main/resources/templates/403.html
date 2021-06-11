@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorator="template1" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:insert="template1.html"> </header>
+
+<div class=" col-md-offset-3" layout:fragment="content">
+
+    <div class="  col-md-9">
+        <div class="panel panel-primary" >
+            <div class="panel-heading"> Pobleme d'autorisation</div>
+            <div class="panel panel-body">
+                <div class="alert alert-danger text-center">Vous avez pas le droit d'acceder
+                a cette ressource</div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorator="template1"
+     xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <header th:insert="template1.html"> </header>
+
+<div layout:fragment="content">
+
+    <div class="col-md-6">
+
+
+
+        <div class="panel panel-primary" >
+            <div class="panel-heading"> Consultation d'un compte</div>
+            <div class="panel panel-body">
+                <form th:action="@{/consulterCompte}">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                            <input name="codeCompte" placeholder="Reseach accout..." class="form-control" th:value="${codeCompte}" type="text">
+                            <span class="input-group-btn">
+                    <button class="btn btn-primary">Ok</button>
+                             </span>
+                        </div><!-- /input-group -->
+                        <div class="text-danger" th:if="${exception}" th:text="${exception.message}"></div>
+
+                    </div><!-- /.col-lg-6 -->
+                </form>
+
+
+            </div>
+        </div>
+
+        <div class="" th:if="${compte}">
+
+                <div class="list-group">
+                    <a href="#" class="list-group-item active">
+                        Information sur le compte
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <div>
+                            <label>Client: </label>
+                            <label th:text="${compte.client.nom}"></label>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <div>
+                            <label>Code: </label>
+                            <label th:text="${compte.codeCompte}"></label>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <div>
+                            <label>Solde: </label>
+                            <label  th:text="${compte.solde}"></label>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <div>
+                            <label>Date creation: </label>
+                            <label th:text="${compte.dateCreation}"></label>
+                        </div>
+                    </a>
+
+                    <a href="#" class="list-group-item">
+                        <div>
+                            <label>Type: </label>
+                            <label th:text="${compte.class.simpleName}"></label>
+                        </div>
+                    </a>
+
+                    <a href="#" class="list-group-item">
+                        <div th:if="${compte.class.simpleName=='CompteCourant'}">
+                            <label>Découvert: </label>
+                            <label th:text="${compte.decouvert}"></label>
+                        </div>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <div th:if="${compte.class.simpleName=='CompteEpargne'}">
+                            <label>Taux: </label>
+                            <label th:text="${compte.taux}"></label>
+                        </div>
+                    </a>
+
+                </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="panel panel-primary" sec:authorize="hasRole('ROLE_ADMIN')" th:if="${compte}">
+            <div class="panel-heading"> Opérations sur un compte</div>
+            <div class="panel panel-body">
+             <form th:action="@{/saveOperation}" method="post">
+                 <div>
+                     <label>Compte :</label>
+                     <input th:value="${codeCompte}" type="hidden" name="codeCompte">
+                     <label th:text="${codeCompte}"></label>
+                 </div>
+
+                 <div>
+                     <input type="radio" checked="checked" name="typeOperation" value="VERS"
+                     onchange="document.getElementById('forVirement').style.display='none'">
+                     <label>Versement</label>
+
+                     <input type="radio" name="typeOperation" value="RET"
+                            onchange="document.getElementById('forVirement').style.display='none'">
+                     <label>Retrait</label>
+
+                     <input type="radio" name="typeOperation" value="VIR"
+                            onchange="document.getElementById('forVirement').style.display='block'">
+                     <label>Virement</label>
+                 </div>
+
+                 <div id="forVirement" style="display: none">
+                     <label>Vers</label><br>
+                     <input name="codeCompte2">
+                 </div>
+
+                 <div>
+                     <label>Montant</label><br>
+                     <input name="montant" >
+                 </div><br>
+
+
+ <div th:if="${success}">
+     <script type="text/javascript">
+         $(document).ready(function() {
+             toastr.options.timeOut = 2000; // 2s
+             toastr.success('Versment effectué avec succcess !');
+         });
+     </script>
+ </div>
+
+                 <div th:if="${retrait}">
+                     <script type="text/javascript">
+                         $(document).ready(function() {
+                             toastr.options.timeOut = 2000; // 2s
+                             toastr.success('Retrait effectué avec succcess !');
+                         });
+                     </script>
+               </div>
+
+                 <div th:if="${virement}">
+                     <script type="text/javascript">
+                         $(document).ready(function() {
+                             toastr.options.timeOut = 2000; // 2s
+                             toastr.success('Virement effectué avec succcess !');
+                         });
+                     </script>
+                 </div>
+
+                 <div class="text-danger"
+         th:text="${#httpServletRequest.getParameter('error')}" >
+
+          </div>
+                 <button type="submit" class="btn btn-primary">Save</button>
+
+             </form>
+            </div>
+        </div>
+
+
+        <div class="panel panel-primary" th:if="${compte}">
+            <div class=" panel-heading"> Liste des operations compte</div>
+            <div class="panel panel-body">
+               <table class="table table-striped">
+                   <tr>
+                       <th>Num</th>
+                       <th>Type</th>
+                       <th>Date</th>
+                       <th>Montant</th>
+                   </tr>
+
+                   <tr th:each="o:${list}">
+                       <td th:text="${o.numero}"></td>
+                       <td th:text="${o.class.simpleName}"></td>
+                       <td th:text="${o.dateOperation}"></td>
+                       <td th:text="${o.montant}"></td>
+                   </tr>
+               </table>
+
+                <div class="container">
+                   <ul class="nav nav-pills">
+                       <li th:each="p,status:${pages}">
+                           <a th:href="@{/consulterCompte(codeCompte=${codeCompte},page=${status.index})}" th:text="${status.index}"></a>
+                       </li>
+                   </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
